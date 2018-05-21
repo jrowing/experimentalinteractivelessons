@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+
+    <title>Physics at EMS</title>
+
+    <meta charset="utf-8">
+
+    <script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+      tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
+      });
+    </script>
+    <script src="https://sagecell.sagemath.org/static/embedded_sagecell.js"></script>
+    <script>sagecell.makeSagecell({"inputLocation": ".sage"});</script>
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="https://cdn.rawgit.com/afeld/bootstrap-toc/v0.4.1/dist/bootstrap-toc.min.css">
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+    
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+    integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+    crossorigin="anonymous"></script>
+
+    <script src="https://cdn.rawgit.com/afeld/bootstrap-toc/v0.4.1/dist/bootstrap-toc.min.js"></script>
+
+    <style>
+      body {font-size: 200%; }
+      div.container { margin-top: 20px; margin-bottom: 100px; }
+      #main  h1 { margin-top: 50px; padding-top: 20px; border-top: 1px solid #cccccc; }
+      #main  h2 { margin-top: 40px; }
+      @media screen{ #main h1 { padding-top: 100px; } }
+      div.sage { padding-top: 20px; padding-bottom: 20px; font-size: 75%; }
+
+      nav[data-toggle='toc'] {
+      margin-top: 30px;
+      margin-left: 30px;
+      }
+    </style>
+
+  </head>
+  <body data-spy="scroll" data-target="#toc">
+
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <h1 data-toc-skip>Physics at EMS</h1>
+      by Joe Rowing<br>
+      last updated 8/27/2017
+    </div>
+  </div>
+</nav>
+
+    <div class="container" id="main">
+      <div class="row" style="margin-top: 20px;">
+        
+        <div class="col-md-9">
+
+          <h1>A Cat Chasing a bobbin Rat</h1>
+          \[
+          r(t) = \text{position of rat}\\
+          c(t) = \text{position of cat}\\
+          d(t) = r(t)-c(t) = \text{distance between cat and rat}
+          \]
+          
+          <h2>Model equation</h2>
+          \[
+          c'(t) = \frac{\tanh(5(d-1))+1}{2}
+          \]
+		  
+		  \[
+	\begin{center}
+			\begin{tikzpicture}
+			\draw[thick] (2,0) rectangle (2.5,5);
+			\draw[thick] (0,4) rectangle (8,4.2);
+			\fill (-0.5,3.8) rectangle (.5,4.4);
+			\draw(2.25,5) -- (8,4.2);
+			\foreach \x in {0,1,...,13} {
+				\draw (1+0.5*\x,4) -- (1.5+0.5*\x,4.2);
+				\draw (1+0.5*\x,4.2) -- (1.5+0.5*\x,4);
+			}
+			\foreach \y in {0,1,...,9} {
+				\draw (2,0+0.5*\y) -- (2.5,0.5+0.5*\y);
+				\draw (2.5,0+0.5*\y) -- (2,0.5+0.5*\y);
+			}
+			\draw[purple, thick, ->] (8,4) -- (8,3) node[right]{$W_l=\SI{4.0e4}{N}$};
+			\draw[purple, thick, ->] (4,4) -- (4,3.4) node[below]{$W_a=\SI{1.2e5}{N}$};
+			\draw[purple,thick, ->] (0,4) -- (0,3) node[right]{$W_c$};
+			\draw[<->] (0,6) -- node[above]{15m}(2.25,6);
+			\draw[<->] (2.25,6) -- node[above]{45m}(8,6);
+			\end{tikzpicture}
+		\end{center}
+		\]
+          <div class="sage">
+            <script type="text/x-sage">
+d = var('d')
+v = 0.5*(tanh(5*(d-1))+1)
+plot(v, (d,0,3), axes_labels=("distance", "velocity") )
+            </script>
+          </div>
+
+          <h2>Simulation</h2>
+          \[
+          r(t) = \frac{1}{2}t + \frac{1}{2}\sin(5t) + 2
+          \]
+<h2>Stuff</h2>
+Newton's second law is more properly given by:
+	
+	\[ F = \frac{dp}{dt} \]
+	
+	This simplifies to the GCSE formulation for constant mass:
+	
+	\[ F = \frac{dp}{dt} = m\frac{dv}{dt} = ma \]
+	
+	A simplified version is:
+	$$F = \frac{\Delta P}{\Delta t}$$
+	
+	This will give the correct result for a constant force or otherwise give the average force.
+	
+          <div class="sage">
+            <script type="text/x-sage">
+c, t = var('c t')
+
+# position of rat
+r = 0.5*t + 0.5*sin(5*t)+2
+
+# velocity function for ode
+v = 0.5*(tanh(5*((r-c)-1))+1)
+
+# initial position of cat
+c0 = 0
+
+# solve the ode
+s = desolve_rk4(v, c, step=.01, ics=(0,c0), end_points=[0,10])
+
+p  = plot( r, (t,0,10), legend_label="rat" )
+p += list_plot(s, plotjoined=True, color="red", legend_label="cat")
+
+p.show(axes_labels=("time","position"))
+            </script>
+          </div>
+
+
+          <h1>Drawing a Slope Field</h1>
+          
+          <h2>Getting Started</h2>
+          \[
+          c'(t) = \frac{\tanh(5(d-1))+1}{2}\\
+          r(t) = \frac{1}{2}t + \frac{1}{2}\sin(5t) + 2
+          \]
+          
+          What is $c'$ when \((t,c)=(0,1)\)?  When \((t,c)=(1,0)\)?
+          When \((t,c)=(1,3)\)?
+
+          <div class="sage">
+            <script type="text/x-sage">
+c, t = var('c t')
+
+# position of rat
+r = 0.5*t + 0.5*sin(5*t)+2
+
+# velocity function for ode
+v = 0.5*(tanh(5*((r-c)-1))+1)
+
+# rows of the table
+rows = [ ['t', 'c', 'r', 'c\'' ] ] + \
+    [ [T, C, float(r.substitute(t=T)), float(v.substitute(t=T,c=C))] \
+    for C in range(4) for T in range (4) ]
+
+# write out the table
+table(rows)
+            </script>
+          </div>
+
+          
+          <h2>The Slope Field</h2>
+          
+          <div class="sage">
+            <script type="text/x-sage">
+c, t = var('c t')
+
+# position of rat
+r = 0.5*t + 0.5*sin(5*t)+2
+
+# velocity function for ode
+v = 0.5*(tanh(5*((r-c)-1))+1)
+
+plot_slope_field(v, (t,0,8), (c,0,8), plot_points=41, aspect_ratio=1, axes_labels=('t','c'))
+            </script>
+          </div>
+
+          <h1>Solutions Follow the Slope Field</h1>
+          \[
+          c'(t) = \frac{\tanh(5(d-1))+1}{2}\\
+          r(t) = \frac{1}{2}t + \frac{1}{2}\sin(5t) + 2
+          \]
+
+          <div class="sage">
+            <script type="text/x-sage">
+c, t = var('c t')
+
+# position of rat
+r = 0.5*t + 0.5*sin(5*t)+2
+
+# velocity function for ode
+v = 0.5*(tanh(5*((r-c)-1))+1)
+
+A = (0,0)
+B = (1,3)
+
+s1 = desolve_rk4(v, c, step=.01, ics=A, end_points=[0,8])
+s2 = desolve_rk4(v, c, step=.01, ics=B, end_points=[0,8])
+
+p  = plot_slope_field(v, (t,0,8), (c,0,8), plot_points=41, aspect_ratio=1)
+p += list_plot(s1,plotjoined=True,color='red')
+p += point(A,size=30,color='red')
+p += list_plot(s2,plotjoined=True,color='blue')
+p += point(B,size=30,color='blue')
+p.show(aspect_ratio=1,xmin=0,xmax=8,ymin=0,ymax=8, axes_labels=('t','c'))
+            </script>
+          </div>
+
+          also check out <a target="_blank"
+          href="https://www.geogebra.org/m/W7dAdgqc">this app</a>
+          <br><br>
+          <b>Question:</b> If several cats start at different points
+          and follow the same rules, do they eventually all end up
+          close together?
+
+          <h1>Isoclines</h1>
+          \[
+          y'(x) = x-y
+          \]
+
+          Given a number $k$, for what values of $(x,y)$ is it true that $y'=k$?
+
+          <div class="sage">
+            <script type="text/x-sage">
+x,y = var('x y')
+
+# right-hand side of ODE
+f = x-y
+
+# the isocline level
+k = -2
+
+p  = plot_slope_field(f, (x,-4,4), (y,-4,4), plot_points=41 )
+p += implicit_plot( f==k, (x,-4,4), (y,-4,4) )
+p.show( aspect_ratio=1, xmin=-4, xmax=4, ymin=-4, ymax=4 )
+            </script>
+          </div>
+
+          Things to try:
+          <ul>
+            <li> $y' = x-y^2$
+            <li> $y' = \sin(xy)$
+            <li>look at solutions in <a target="_blank" href="https://www.geogebra.org/m/W7dAdgqc">this app</a>
+          </ul>
+          
+
+          <h1>Something to Bake Your Noodle</h1>
+          \[
+          r(t) = \text{position of rat}\\
+          c(t) = \text{position of cat}\\
+          d(t) = r(t)-c(t) = \text{distance between cat and rat}
+          \]
+          
+          <h2>Model equation</h2>
+          \[
+          c'(t) = u(d-1) =
+          \begin{cases}
+          0 &\text{if }d\lt 1\\
+          1 &\text{if }d\ge 1
+          \end{cases}
+          \]
+
+          <div class="sage">
+            <script type="text/x-sage">
+d = var('d')
+v = unit_step(d-1)
+plot(v, (d,0,3), axes_labels=("distance", "velocity") )
+            </script>
+          </div>
+
+          <h2>Simulation</h2>
+          \[
+          r(t) = \frac{1}{2}t + 2
+          \]
+
+          <div class="sage">
+            <script type="text/x-sage">
+c, t = var('c t')
+
+# position of rat
+r = 0.5*t + 2
+
+# velocity function for ode
+v = unit_step(r-c-1)
+
+# initial position of cat
+c0 = 0
+
+# solve the ode
+s = desolve_rk4(v, c, step=.01, ics=(0,c0), end_points=[0,10])
+
+p  = plot( r, (t,0,10), legend_label="rat" )
+p += list_plot(s, plotjoined=True, color="red", legend_label="cat")
+
+p.show(axes_labels=("time","position"))
+            </script>
+          </div>
+
+          <h2>Some takeaways</h2>
+          <ul>
+            <li>Don't implicitly trust numerical solutions
+            <li>Sometimes numerical solutions will actually be "almost solutions"
+            <li>There is a reason mathematicians study the <em>theory</em> of ODEs
+          </ul>
+
+
+          <h1>A little about the theory</h1>
+
+          <ul>
+            <li>Not every ODE we write down is guaranteed to have a
+            solution.  This is also true of algebraic equations, by
+            the way.  Think about
+
+              \[
+              |x| = -1.
+              \]
+
+              
+            <li>Not every ODE that has a solution has
+            a <em>unique</em> solution.  This is sort of like the fact
+            that
+
+              \[
+              x^2 = 1
+              \]
+
+              doesn't have a unique solution.
+
+            <li>Examples both <em>non</em>existence
+            and <em>non</em>uniqueness can be found <a target="_blank"
+            href="http://www.jirka.org/diffyqs/htmlver/diffyqsse5.html#x9-160001.2.2">here</a>,
+            along with an example of an "existence and uniqueness"
+            theorem from advanced ODEs.
+          </ul>
+
+
+        </div>
+
+        <div class="col-md-2">
+          <nav id="toc" data-toggle="toc" data-spy="affix"></nav>
+        </div>
+
+      </div>
+    </div>
+    
+  </body>
+</html>
